@@ -3,6 +3,8 @@
 
 > Frequency computation app built with react and nodejs
 
+### Deployed On Heroku: [Deployed app](https://frequency-computation-rne.herokuapp.com/)
+
 ## Usage
 
 Install [nodemon](https://github.com/remy/nodemon) globally
@@ -41,11 +43,8 @@ The key to use an Express backend with a project created with `create-react-app`
 
 This tells Webpack development server to proxy our API requests to our API server, given that our Express server is running on **localhost:5000**
 
-## Tutorial
 
-Visit my [blog post](Link) entry for a detailed step-by-step guide.
-
-[Deployed app](Link)
+[Deployed app](https://frequency-computation-rne.herokuapp.com/)
 
 ## Giving Back
 
