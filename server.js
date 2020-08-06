@@ -19,8 +19,6 @@ function getData(valueOfN) {
     let settings = {
         method: "Get"
     };
-
-
     fetch(url, settings,).then(res => res.text()).then((json) => {
         let text = json
         frequencyComputation(text, valueOfN)
@@ -55,20 +53,15 @@ function frequencyComputation(data, n) {
         objSorted[item[0]] = item[1]
     })
     final_output = objSorted
-    final_output
-    console.log(objSorted)
-    console.log(typeof(final_output))
-    return finalWordsCount
 }
 
 
 app.post('/api/post', (req, res) => {
-    console.log(req.body);
     valueOfN = req.body.post
     getData(valueOfN);
-    res.send(`I received your POST request. This is what you sent me: ${
-        req.body.post
-    }`);
+    res.send(`We received your request !
+    Hang Tight...
+    `);
 });
 
 // API calls

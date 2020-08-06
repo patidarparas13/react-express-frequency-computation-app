@@ -28,10 +28,10 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/patidarparas13/react-express-frequency-computation-app.git"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/patidarparas13/react-express-frequency-computation-app/issues"
   },
   "keywords": [
     "node",

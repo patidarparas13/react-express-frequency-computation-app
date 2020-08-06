@@ -1,6 +1,18 @@
 import React, {Component} from 'react';
-import {Table, Spinner} from 'react-bootstrap';
+import {
+    Table,
+    Spinner,
+    Container,
+    Row,
+    Col,
+    Card,
+    Button,
+    Form,
+    FormControl
+} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Navigation from './components/Navigation'
+import Info from './components/Info'
 
 class App extends Component {
     state = {
@@ -12,7 +24,6 @@ class App extends Component {
     };
 
     async handleClick() {
-        console.log("1")
         try {
             this.setState({loading: true})
             const response = await fetch('/api/get');
@@ -20,23 +31,17 @@ class App extends Component {
             this.setState({
                 response: JSON.parse(JSON.stringify(data))
             })
-            console.log(this.state.response)
-            console.log("9")
             this.setState({
                 obj: JSON.parse(this.state.response)
             })
-            console.log(this.state.obj)
-            console.log("10")
             this.setState({loading: false})
         } catch (error) {
             console.log(error);
         }
-        console.log("8")
     }
 
     handleSubmit = async e => {
         e.preventDefault();
-        console.log("3")
         const response = await fetch('/api/post', {
             method: 'POST',
             headers: {
@@ -48,79 +53,89 @@ class App extends Component {
         });
         const body = await response.text();
         this.handleClick()
-        console.log("4")
         this.setState({responseToPost: body});
+        this.setState({post: ''});
     };
 
 
     render() {
-        const display = Object.keys(this.state.response).map((i, j) => {
-            return (
-                <tr key={j}>
-                    <td>{
-                        j + 1
-                    }</td>
-                    <td>{i}</td>
-                    <td>{
-                        this.state.response[i]
-                    }</td>
-                </tr>
-
-            )
-        })
         return (
             <div className="App">
-                <form onSubmit={
-                    this.handleSubmit
-                }>
-                    <p>
-                        <strong>Post to Server:</strong>
-                    </p>
-                    <input type="text"
-                        value={
-                            this.state.post
-                        }
-                        onChange={
-                            e => this.setState({post: e.target.value})
-                        }/>
-                    <button type="submit"
-                        onClick={
-                            () => this.handleClick()
-                    }>Submit</button>
-                </form>
+                <Navigation/>
+                <br/>
+                <br/>
+                <Info/>
+                <br/>
+                <Container>
+                    <Card body className="text-center">
+                        <Row className="justify-content-md-center">
+                            <Col md="auto">
 
-                <p>{
-                    this.state.responseToPost
-                }</p>
-                <p>{
-                    this.state.response
-                }</p>
+                                <Form onSubmit={
+                                    this.handleSubmit
+                                }>
+                                    <p>
+                                        <strong>Fetch Top N Occuring Words:</strong>
+                                    </p>
+                                    <FormControl type="text"
+                                        value={
+                                            this.state.post
+                                        }
+                                        onChange={
+                                            e => this.setState({post: e.target.value})
+                                        }
+                                        placeholder="Enter Value Of N"/>
+                                    <br/>
+                                    <Button variant="outline-secondary" className="justify-content-center"
+                                        onClick={
+                                            () => this.handleClick()
+                                    }>Submit</Button>
+                                </Form>
 
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>S. No.</th>
-                            <th>Word</th>
-                            <th>Frequency</th>
-                        </tr>
-                    </thead>
-                    <tbody>{
-                        this.state.loading ? <Spinner animation="border"/> : Object.keys(this.state.obj).map((i, j) => {
-                            return (
-                                <tr key={j}>
-                                    <td>{
-                                        j + 1
-                                    }</td>
-                                    <td>{i}</td>
-                                    <td>{
-                                        this.state.obj[i]
-                                    }</td>
-                                </tr>
 
-                            )
-                        })
-                    } </tbody>
-                </Table>
+                                <br/>
+                                <p>
+                                    <b> {
+                                        this.state.responseToPost
+                                    } </b>
+                                </p>
+                            </Col>
+                        </Row>
+                    </Card>
+
+                    <br/>
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>S. No.</th>
+                                <th>Word</th>
+                                <th>Frequency</th>
+                            </tr>
+                        </thead>
+                        <tbody>{
+                            this.state.loading ? <Spinner animation="border"/> : Object.keys(this.state.obj).map((i, j) => {
+                                return (
+                                    <tr key={j}>
+                                        <td>{
+                                            j + 1
+                                        }</td>
+                                        <td>{i}</td>
+                                        <td>{
+                                            this.state.obj[i]
+                                        }</td>
+                                    </tr>
+                                )
+                            })
+                        }</tbody>
+                    </Table>
+                    <div className="text-center">
+                        <strong>
+                            Made With
+                            <img src="https://img.icons8.com/cotton/64/000000/like--v1.png" alt="heart"/>
+                            By Paras Patidar</strong>
+                        <a href="https://icons8.com/icon/64452/heart">.</a>
+                    </div>
+                </Container>
             </div>
         );
     }
